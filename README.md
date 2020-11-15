@@ -1,4 +1,8 @@
-# ObjectDetction-Pytorch
+# DL-Pytorch
 
-## [EfficientDet](https://github.com/ultra118/ObjectDetction-Pytorch/tree/main/EfficientDet)
+> deep learning model with pytorch
+
+## ObjectDetection
+### one-stage model
+#### EfficientDet
 
