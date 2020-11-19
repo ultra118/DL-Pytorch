@@ -4,5 +4,10 @@
 
 ## ObjectDetection
 ### one-stage model
-#### [EfficientDet](https://github.com/ultra118/DL-Pytorch/tree/main/ObjectDetection/one-stage/EfficientDet)
+- [EfficientDet](https://github.com/ultra118/DL-Pytorch/tree/main/ObjectDetection/one-stage/EfficientDet)
+
+## Image Retrieval
+- CGD
+
+  > Combination of Multiple Global Descriptors for Image Retrieval
 
