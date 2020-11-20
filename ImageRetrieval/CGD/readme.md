@@ -29,7 +29,7 @@ __code__: https://github.com/leftthomas/CGD
 
   
 
-# code review
+# code tip
 
 - utils.ImageReader를 따로 define 해두고 사용하는데, 각 데이터 셋에 따라 적합하게 dataset type으로 변환해준다
 
@@ -102,6 +102,30 @@ __code__: https://github.com/leftthomas/CGD
       ```
 
     - nn.modulelist는 list로 module받아서 layer 구성하는 것, sequential과 다른 점은 forward가 선언되어 있지 않음, nn.Sequential은 list로는 못받음, 직접 다 indexing 해줘야함
+
+- resnet18로 model 학습했을때 가정
+
+
+  - ```python
+    # CGD model
+    model = Model(backbone_type, gd_config, feature_dim, num_classes=len(train_data_set.class_to_idx)).cuda()
+    torch.save(model.state_dict(), '{}/{}_{}_epoch_model.pth'.format(opt.log_save_dir, save_name_pre, epoch))
+    ```
+
+  - 학습 코드는 분명 그냥 model.state_dict()부분을 저장하는데,
+    나중에 학습된 weights 써먹으려고보면 len(keys())가 맞지않음
+    `len(model.state_dict().keys())=128`,
+    `len(torch.load(weights).keys())=181`
+
+
+    - 근데 model.state_dict()에 descriptor weight는 없는 것 같음, 그리고 `.total_ops`, `_total_params`같은 값들이 저장되어 있음
+
+      - profile 함수 통해  ops, parameter 저장됨, ops는 operator system?
+    - `model.load_state_dict(strict=False)` , strict인자에 false를 주면 load 하는 state_dict과 model의 state_dict중 중복되는 경우의 layer만 load함
+
+  - 일반적인 resnet18은 122개임, CGD는 fc layer부분이 없고 auxiliary_modules로 projection
+
+    
 
 - model(intput) 값을 넣어 inference를 하는 경우 batch size를 1보다 크게 넣을때는 inference하지만, 1의 값을 넣을때 오류가 발생하는 경우가 있음
 
